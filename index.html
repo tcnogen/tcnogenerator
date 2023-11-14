@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #textfield {
+            background-color: #ccc;
+            width: 110px;
+            height: 22px;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: center;
+            border: none;
+            color: #333;
+        }
+        #textfield:active {
+            border: none;
+        }
+
+        #copybtn {
+            width: 110px;
+            height: 32px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            border: none;
+            background-color: #999;
+            color: #333;
+            transition: all ease 0.15s;
+        }
+        #copybtn:active {
+            color: #ccc;
+            background-color: #333;
+            scale: 0.9;
+        }
+    </style>
+</head>
+<body>
+        <div id="div"></div>
+        <input type="text" name="" id="textfield" readonly>
+        <br>
+        <input type="button" id="copybtn" value="KOPYALA">
+
+        <script>
+            let textfield = document.getElementById("textfield");
+            let copybtn = document.getElementById("copybtn");
+
+            let tc = "";
+            function generateTC() {
+                tc += Math.floor(Math.random() * 9) + 1;
+                for(let i = 0; i<8; i++) {
+                    tc += Math.floor(Math.random() * 10);
+                }
+                let x = +tc[0] + +tc[2] + +tc[4] + +tc[6] + +tc[8];
+                let y = +tc[1] + +tc[3] + +tc[5] + +tc[7];
+                let tenth = (x * 7 - y) % 10;
+                tc += tenth;
+                let eleventh = (+tc[0] + +tc[1] + +tc[2] + +tc[3] + +tc[4] + +tc[5] + +tc[6] + +tc[7] + +tc[8] + +tc[9])%10;
+                tc += eleventh;
+                textfield.value = tc;
+
+                textfield.select();
+                textfield.setSelectionRange(0, 99999);
+                document.execCommand("copy")
+                tc = "";
+            }
+
+            copybtn.addEventListener("click", generateTC);
+            document.getElementById("div").focus();
+        </script>
+</body>
+</html>
